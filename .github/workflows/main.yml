@@ -37,13 +37,13 @@ jobs:
 
       - name : DEBUG
         run: |
-          echo "${GITHUB_WORKSPACE}/vulnerabilities.json"
+          echo "${{ GITHUB_WORKSPACE }}/vulnerabilities.json"
 
       - name: Upload Anchore scan json report
         uses: actions/upload-artifact@master
         with:
           name: vulnerabilities
-          path: ${GITHUB_WORKSPACE}/vulnerabilities.json
+          path: ${{ GITHUB_WORKSPACE }}/vulnerabilities.json
 
       - name: Download json report from build job
         uses: actions/download-artifact@v2
