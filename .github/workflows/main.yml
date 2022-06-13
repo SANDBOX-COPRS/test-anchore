@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.ARTIFACTORY_PASSWORD }}
 
       - name: Scan image
-        uses: anchore/scan-action@v2
+        uses: anchore/scan-action@v3
         id: scan
         with:
           image: ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
