@@ -35,8 +35,7 @@ jobs:
       - name : DEBUG
         run: |
           echo "${{ github.workspace }}/vulnerabilities.json"
-          find
-          ls ${{ github.workspace }}/vulnerabilities.json
+          echo "find" && find
 
       - name: Upload Anchore scan json report
         uses: actions/upload-artifact@master
