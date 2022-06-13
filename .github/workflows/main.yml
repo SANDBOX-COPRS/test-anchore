@@ -32,11 +32,15 @@ jobs:
           fail-build: false
           severity-cutoff: critical
 
+      - name: Show files
+        run: |
+          ls ${{ steps.scan.outputs }}
+          
       - name: Upload Anchore scan json report
         uses: actions/upload-artifact@master
         with:
           name: vulnerabilities
-          path: ${{ steps.scan.outputs.vulnerabilities/vulnerabilities.json }}
+          path: ${{ steps.scan.outputs.vulnerabilities }}
 
       - name: Download json report from build job
         uses: actions/download-artifact@v2
