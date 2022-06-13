@@ -34,8 +34,8 @@ jobs:
 
       - name: Show files
         run: |
-          ls ${{ steps.scan.outputs }}
-          
+          find /home/runner/work/
+
       - name: Upload Anchore scan json report
         uses: actions/upload-artifact@master
         with:
