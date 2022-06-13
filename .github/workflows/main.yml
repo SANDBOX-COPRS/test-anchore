@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: vulnerabilities
-          path:${{ github.workspace }}/vulnerabilities.json
+          path: ${{ github.workspace }}/vulnerabilities.json
 
       - name: Download json report from build job
         uses: actions/download-artifact@v2
