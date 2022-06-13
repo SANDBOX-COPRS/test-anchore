@@ -35,6 +35,7 @@ jobs:
       - name: Show files
         run: |
           find /home/runner/work/
+          cat /home/runner/work/_actions/anchore/scan-action/v3/.grype.yaml
 
       - name: Upload Anchore scan json report
         uses: actions/upload-artifact@master
