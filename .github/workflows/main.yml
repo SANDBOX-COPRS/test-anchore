@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: vulnerabilities
-          path: ${{ steps.scan.outputs.vulnerabilities }}
+          path: ${{ steps.scan.outputs.vulnerabilities/vulnerabilities.json }}
 
       - name: Download json report from build job
         uses: actions/download-artifact@v2
