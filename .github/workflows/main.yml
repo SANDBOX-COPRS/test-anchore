@@ -35,6 +35,9 @@ jobs:
           fail-build: false
           severity-cutoff: critical
 
+      - run: |
+        echo "${GITHUB_WORKSPACE}/vulnerabilities.json"
+
       - name: Upload Anchore scan json report
         uses: actions/upload-artifact@master
         with:
