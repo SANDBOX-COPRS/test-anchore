@@ -37,14 +37,17 @@ jobs:
 
       - name: Show files
         run: |
-          find /home/runner/work/
-          cat /home/runner/work/_actions/anchore/scan-action/v3/.grype.yaml
+          echo "find cmd" && find /home/runner/work/
+          echo "cat cmd" && cat /home/runner/work/_actions/anchore/scan-action/v3/.grype.yaml
+          echo "echo cmd for steps.scan.outputs" && echo ${{ steps.scan.outputs }}
+          echo "ls cmd for steps.scan.outputs" && ls ${{ steps.scan.outputs }}
+          
 
       - name: Upload Anchore scan json report
         uses: actions/upload-artifact@master
         with:
           name: vulnerabilities
-          path: ${{ steps.scan.outputs.vulnerabilities }}
+          path: ${{ steps.scan.outputs }}
 
       - name: Download json report from build job
         uses: actions/download-artifact@v2
