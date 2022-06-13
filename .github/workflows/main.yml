@@ -39,6 +39,7 @@ jobs:
         run: |
           echo "find cmd" && find /home/runner/work/
           echo "cat vuln json" && cat /home/runner/work/test-anchore/test-anchore/vulnerabilities.json
+          echo "echo sarif path" && echo ${{ steps.scan.outputs.sarif }}
 
       - name: Upload Anchore scan json report
         uses: actions/upload-artifact@master
