@@ -43,15 +43,33 @@ jobs:
       #  run: |
       #    docker run anchore/grype docker:${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
 
-      - name: Run Trivy vulnerability scanner
+      - name: Run Trivy vulnerability scanner HTML
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
+          format: 'template'
+          template: '@contrib/html.tpl'
+          output: 'vulnerabilities.html'
+          exit-code: '0'
+          ignore-unfixed: false
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+      - name: Run Trivy vulnerability scanner SARIF
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
+          format: 'sarif'
+          exit-code: '0'
+          ignore-unfixed: false
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v1
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
 
       - name : DEBUG
         run: |
