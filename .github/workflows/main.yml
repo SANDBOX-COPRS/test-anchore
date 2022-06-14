@@ -36,13 +36,8 @@ jobs:
       #    severity-cutoff: critical
 
       - name: Scan image
-        uses: docker://anchore/grype
-        with:
-          args: ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
-        env:
-          GRYPE_REGISTRY_AUTH_AUTHORITY: ${{ env.REGISTRY_BASE }}
-          GRYPE_REGISTRY_AUTH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-          GRYPE_REGISTRY_AUTH_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: |
+          docker run --env GRYPE_REGISTRY_AUTH_AUTHORITY=${{ env.REGISTRY_BASE }} --env GRYPE_REGISTRY_AUTH_USERNAME=${{ secrets.ARTIFACTORY_USERNAME }} --env GRYPE_REGISTRY_AUTH_PASSWORD=${{ secrets.ARTIFACTORY_PASSWORD }} anchore/grype ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
 
       - name : DEBUG
         run: |
