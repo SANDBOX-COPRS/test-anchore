@@ -35,6 +35,10 @@ jobs:
       #    fail-build: false
       #    severity-cutoff: critical
 
+      - name: Pull image
+        run: |
+          docker pull ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
+          
       - name: Scan image
         run: |
           docker run anchore/grype docker:${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
