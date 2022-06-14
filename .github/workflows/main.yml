@@ -26,14 +26,19 @@ jobs:
           username: ${{ secrets.ARTIFACTORY_USERNAME }}
           password: ${{ secrets.ARTIFACTORY_PASSWORD }}
 
+      #- name: Scan image
+      #  uses: anchore/scan-action@v3
+      #  id: scan
+      #  with:
+      #    image: ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
+      #    acs-report-enable: true
+      #    fail-build: false
+      #    severity-cutoff: critical
+
       - name: Scan image
-        uses: anchore/scan-action@v3
-        id: scan
+        uses: docker://anchore/grype
         with:
-          image: ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
-          acs-report-enable: true
-          fail-build: false
-          severity-cutoff: critical
+          args: ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
 
       - name : DEBUG
         run: |
