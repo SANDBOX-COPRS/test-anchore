@@ -26,14 +26,14 @@ jobs:
           username: ${{ secrets.ARTIFACTORY_USERNAME }}
           password: ${{ secrets.ARTIFACTORY_PASSWORD }}
 
-      - name: Scan image
-        uses: anchore/scan-action@v3
-        id: scan
-        with:
-          image: ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
-          acs-report-enable: true
-          fail-build: false
-          severity-cutoff: critical
+      #- name: Scan image
+      #  uses: anchore/scan-action@v3
+      #  id: scan
+      #  with:
+      #    image: ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
+      #    acs-report-enable: true
+      #    fail-build: false
+      #    severity-cutoff: critical
 
       #- name: Pull image
       #  run: |
@@ -42,6 +42,16 @@ jobs:
       #- name: Scan image
       #  run: |
       #    docker run anchore/grype docker:${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
 
       - name : DEBUG
         run: |
