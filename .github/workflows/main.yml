@@ -38,7 +38,7 @@ jobs:
       - name: Scan image
         uses: docker://anchore/grype
         with:
-          args: ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
+          args: docker:${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
 
       - name : DEBUG
         run: |
