@@ -37,7 +37,7 @@ jobs:
 
       - name: Scan image
         run: |
-          docker run --env GRYPE_REGISTRY_AUTH_AUTHORITY=${{ env.REGISTRY_BASE }} --env GRYPE_REGISTRY_AUTH_USERNAME=${{ secrets.ARTIFACTORY_USERNAME }} --env GRYPE_REGISTRY_AUTH_PASSWORD=${{ secrets.ARTIFACTORY_PASSWORD }} anchore/grype ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
+          docker run anchore/grype docker:${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
 
       - name : DEBUG
         run: |
