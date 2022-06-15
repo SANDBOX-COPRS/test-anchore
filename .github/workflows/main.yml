@@ -68,6 +68,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
       
       - name : DEBUG
+        continue-on-error: true
         run: |
           echo "${{ github.workspace }}/vulnerabilities.json"
           echo "find" && find /home/runner/work/
@@ -102,10 +103,9 @@ jobs:
       #  with:
       #    args: vulnerabilities.html vulnerabilities.pdf
 
-      #- name: Upload Anchore scan reports
-      #  uses: actions/upload-artifact@master
-      #  with:
-      #    name: vulnerabilities
-      #    path: |
-      #      vulnerabilities.csv
-      #      vulnerabilities.pdf
+      - name: Upload Anchore scan reports
+        uses: actions/upload-artifact@master
+        with:
+          name: vulnerabilities
+          path: |
+            vulnerabilities.html
