@@ -62,6 +62,7 @@ jobs:
         with:
           image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
           format: 'sarif'
+          output: trivy-results.sarif
           exit-code: '0'
           ignore-unfixed: false
           vuln-type: 'os,library'
