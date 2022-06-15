@@ -19,7 +19,8 @@ jobs:
     services:
       trivy-server:
         image: ghcr.io/aquasecurity/trivy
-        options: server --listen localhost:8080
+        with:
+          args: server --listen localhost:8080
         ports:
           - 8080
 
