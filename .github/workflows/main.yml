@@ -15,6 +15,14 @@ env:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    
+    services:
+      trivy-server:
+        image: ghcr.io/aquasecurity/trivy
+        options: server --listen localhost:8080
+        ports:
+          - 8080
+
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -43,18 +51,23 @@ jobs:
       #  run: |
       #    docker run anchore/grype docker:${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
 
-      - name: Run Trivy vulnerability scanner HTML
-        uses: aquasecurity/trivy-action@master
-        continue-on-error: true
+      #- name: Run Trivy vulnerability scanner HTML
+      #  uses: aquasecurity/trivy-action@master
+      #  continue-on-error: true
+      #  with:
+      #    image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
+      #    format: 'template'
+      #    template: '@contrib/html.tpl'
+      #    output: 'vulnerabilities.html'
+      #    exit-code: '0'
+      #    ignore-unfixed: false
+      #    vuln-type: 'os,library'
+      #    severity: 'CRITICAL,HIGH'
+
+      - name: Convert HTLM to PDF
+        uses: docker://ghcr.io/aquasecurity/trivy:0.28.1
         with:
-          image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
-          format: 'template'
-          template: '@contrib/html.tpl'
-          output: 'vulnerabilities.html'
-          exit-code: '0'
-          ignore-unfixed: false
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          args: i --server http://localhost${{ job.services.trivy-server.ports[8080] }} ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
 
       - name: Run Trivy vulnerability scanner SARIF
         uses: aquasecurity/trivy-action@master
