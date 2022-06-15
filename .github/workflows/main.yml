@@ -73,11 +73,11 @@ jobs:
           echo "${{ github.workspace }}/vulnerabilities.json"
           echo "find" && find /home/runner/work/
 
-      #- name: Upload Trivy scan results to GitHub Security tab
-      #  uses: github/codeql-action/upload-sarif@v2
-      #  if: always()
-      #  with:
-      #    sarif_file: 'trivy-results.sarif'
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
 
       #- name: Upload Anchore scan json report
       #  uses: actions/upload-artifact@master
