@@ -49,7 +49,7 @@ jobs:
         with:
           image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
           format: 'template'
-          template: '@contrib/html.tpl'
+          template: '@/usr/local/share/trivy/templates/html.tpl'
           output: 'vulnerabilities.html'
           exit-code: '0'
           ignore-unfixed: false
