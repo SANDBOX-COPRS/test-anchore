@@ -142,9 +142,9 @@ runs:
     - name: Check for output html
       if: ${{ contains(inputs.template, 'html') && contains(inputs.format, 'template') }}
       id: check-html
+      uses: aquasecurity/trivy-action@master
       with:
         format: 'template'
-        template: '@/contrib/html.tpl'
         output: '${{ inputs.output }}.html'
         scan-type: '${{ inputs.scan-type }}'
         input: '${{ inputs.input }}'
@@ -203,7 +203,7 @@ runs:
         args: '--orientation Landscape ${{ inputs.output }}.html ${{ inputs.output }}.pdf'
 
     - name: Upload Anchore scan reports
-      if: ${{ success() && contains(inputs.template, 'html') && contains(inputs.template, 'html') }}
+      if: ${{ success() }}
       id: upload-artifact
       uses: actions/upload-artifact@master
       with:
