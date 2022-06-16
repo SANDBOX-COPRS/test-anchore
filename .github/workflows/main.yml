@@ -90,7 +90,7 @@ jobs:
       - name: Convert HTLM to PDF
         uses: docker://ghcr.io/coprs/reference-system:dependencies_wkhtmltopdf
         with:
-          args: vulnerabilities.html vulnerabilities.pdf
+          args: --orientation Landscape vulnerabilities.html vulnerabilities.pdf
 
       - name: Upload Anchore scan reports
         uses: actions/upload-artifact@master
