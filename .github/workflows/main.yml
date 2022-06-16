@@ -49,7 +49,7 @@ jobs:
         with:
           image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
           format: 'template'
-          template: '@contrib/html.tpl'
+          template: '@/contrib/html.tpl'
           output: 'vulnerabilities.html'
           exit-code: '0'
           ignore-unfixed: false
@@ -67,23 +67,12 @@ jobs:
           ignore-unfixed: false
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-      
-      - name : DEBUG
-        continue-on-error: true
-        run: |
-          echo "find" && find /home/runner/work/
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
-
-      #- name: Upload Anchore scan json report
-      #  uses: actions/upload-artifact@master
-      #  with:
-      #    name: vulnerabilities
-      #    path: ${{ github.workspace }}/vulnerabilities.json
 
       #- name: Download json report from build job
       #  uses: actions/download-artifact@v2
@@ -98,10 +87,10 @@ jobs:
       #    cat vulnerabilities.json | jq -r '.matches[] | "<tr>;<td><p>\(.vulnerability.severity)</p></td>;<td><p><a href=\"\(.vulnerability.links[0])\">\(.vulnerability.id)</a></p></td>;<td><p>\(.artifact.name)</p></td>;<td><p>\(.artifact.version)</p></td>;</tr>"' | tr -s ';' '\n' | sed 's!><p>Negligible! style="background-color:#FFFFFF;"><p>Negligible!g' | sed 's!><p>Low! style="background-color:#FFFC9E;"><p>Low!g' | sed 's!><p>Medium! style="background-color:#FE996B;"><p>Medium!g' | sed 's!><p>High! style="background-color:#FD6864;"><p>High!g' | sed 's!><p>Critical! style="background-color:#FE0000;"><p>Critical!g' >> vulnerabilities.html
       #    echo -e '</tbody>\n</table>' >> vulnerabilities.html
 
-      #- name: Convert HTLM to PDF
-      #  uses: docker://ghcr.io/coprs/reference-system:dependencies_wkhtmltopdf
-      #  with:
-      #    args: vulnerabilities.html vulnerabilities.pdf
+      - name: Convert HTLM to PDF
+        uses: docker://ghcr.io/coprs/reference-system:dependencies_wkhtmltopdf
+        with:
+          args: vulnerabilities.html vulnerabilities.pdf
 
       - name: Upload Anchore scan reports
         uses: actions/upload-artifact@master
@@ -109,3 +98,4 @@ jobs:
           name: vulnerabilities
           path: |
             vulnerabilities.html
+            vulnerabilities.pdf
