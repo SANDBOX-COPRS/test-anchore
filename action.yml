@@ -1,0 +1,21 @@
+name: 'Trivy Scan'
+description: 'Scan vulns with Trivy'
+inputs:
+  output-filename:  # id of input
+    description: 'The name of the output file(s)'
+    required: false
+    default: 'vulnerabilites'
+  output-format:  # id of input
+    description: 'The format of the output file(s)'
+    required: false
+    default: 'sarif'
+runs:
+  using: "composite"
+  steps:
+    - id: pull-trivy-latest
+      run: docker pull ghcr.io/aquasecurity/trivy:latest
+      shell: bash
+    - id: check-input
+      run: echo "json detected"
+      shell: bash
+      if: ${{ contains(inputs.output-format, 'json') }}
