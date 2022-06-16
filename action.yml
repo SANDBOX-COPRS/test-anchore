@@ -15,7 +15,19 @@ runs:
     - id: pull-trivy-latest
       run: docker pull ghcr.io/aquasecurity/trivy:latest
       shell: bash
-    - id: check-input
+    - id: check-json
       run: echo "json detected"
       shell: bash
       if: ${{ contains(inputs.output-format, 'json') }}
+    - id: check-sarif
+      run: echo "sarif detected"
+      shell: bash
+      if: ${{ contains(inputs.output-format, 'sarif') }}
+    - id: check-html
+      run: echo "html detected"
+      shell: bash
+      if: ${{ contains(inputs.output-format, 'html') }}
+    - id: check-table
+      run: echo "table detected"
+      shell: bash
+      if: ${{ contains(inputs.output-format, 'table') }}
