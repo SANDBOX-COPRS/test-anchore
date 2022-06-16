@@ -1,5 +1,11 @@
 name: Test-GitHub-Action
 
+env:
+  REGISTRY_BASE: artifactory.coprs.esa-copernicus.eu
+  ARTIFACTORY_PROJECT: werum-docker
+  ARTIFACTORY_IMAGE: rs-core-dlq-manager
+  ARTIFACTORY_TAG: develop
+
 # Controls when the workflow will run
 on:
   push:
@@ -9,6 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     name: Test GitHub Action
     steps:
+      - name: Login to Artifactory
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY_BASE }}
+          username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
+      - name: Pull image
+        run: |
+          docker pull ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
+          
       - id: foo
         uses: sandbox-coprs/test-security-scan@master
         with:

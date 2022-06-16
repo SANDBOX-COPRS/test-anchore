@@ -16,8 +16,15 @@ runs:
       run: docker pull ghcr.io/aquasecurity/trivy:latest
       shell: bash
     - id: check-json
-      run: echo "json detected"
-      shell: bash
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
+        format: 'json'
+        output: '${{ inputs.output-filename }}.json'
+        exit-code: '0'
+        ignore-unfixed: false
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
       if: ${{ contains(inputs.output-format, 'json') }}
     - id: check-sarif
       run: echo "sarif detected"
