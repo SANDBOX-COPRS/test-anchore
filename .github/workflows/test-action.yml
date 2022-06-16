@@ -25,8 +25,8 @@ jobs:
       - name: Pull image
         run: |
           docker pull ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
-          
+
       - id: foo
         uses: sandbox-coprs/test-security-scan@master
         with:
-          output-format: 'json,table,sarif'
+          image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
