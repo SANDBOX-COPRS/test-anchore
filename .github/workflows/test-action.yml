@@ -10,6 +10,6 @@ jobs:
     name: Test GitHub Action
     steps:
       - id: foo
-        uses: actions/hello-world-composite-action@v1
+        uses: coprs/test-security-scan@v1
         with:
-          who-to-greet: 'Mona the Octocat'
+          output-format: 'json'
