@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ubuntu:latest
-      options: -v /home/runner/work/test-security-scan/test-security-scan/csv.tpl:/contrib/csv.tpl:ro
+      options: -v /__w/test-security-scan/test-security-scan/csv.tpl:/contrib/csv.tpl:ro
     name: Test GitHub Action
     steps:
       - uses: actions/checkout@v2
