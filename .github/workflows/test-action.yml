@@ -4,21 +4,21 @@ env:
   REGISTRY_BASE: artifactory.coprs.esa-copernicus.eu
   ARTIFACTORY_PROJECT: rs-docker-private
   ARTIFACTORY_IMAGE: ew-l0c
-  ARTIFACTORY_TAG: develop
+  ARTIFACTORY_TAG: 1.4.0-rc2
 
 # Controls when the workflow will run
 on:
   push:
   workflow_dispatch:
 jobs:
-  hello_world_job:
+  scan:
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:latest
-      options: -v /__w/test-security-scan/test-security-scan/csv.tpl:/contrib/csv.tpl:ro
+    #container:
+    #  image: ubuntu:latest
+    #  options: -v /__w/test-security-scan/test-security-scan/csv.tpl:/contrib/csv.tpl:ro
     name: Test GitHub Action
     steps:
-      - uses: actions/checkout@v2
+      #- uses: actions/checkout@v2
       
       - name: Login to Artifactory
         uses: docker/login-action@v2
