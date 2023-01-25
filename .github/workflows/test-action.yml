@@ -2,8 +2,8 @@ name: Test-GitHub-Action
 
 env:
   REGISTRY_BASE: artifactory.coprs.esa-copernicus.eu
-  ARTIFACTORY_PROJECT: werum-docker
-  ARTIFACTORY_IMAGE: rs-core-dlq-manager
+  ARTIFACTORY_PROJECT: rs-docker-private
+  ARTIFACTORY_IMAGE: ew-l0c
   ARTIFACTORY_TAG: develop
 
 # Controls when the workflow will run
