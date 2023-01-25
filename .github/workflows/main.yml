@@ -6,9 +6,9 @@ on:
 
 env:
   REGISTRY_BASE: artifactory.coprs.esa-copernicus.eu
-  ARTIFACTORY_PROJECT: werum-docker
-  ARTIFACTORY_IMAGE: rs-core-dlq-manager
-  ARTIFACTORY_TAG: develop
+  ARTIFACTORY_PROJECT: rs-docker-private
+  ARTIFACTORY_IMAGE: ew-l0c
+  ARTIFACTORY_TAG: 1.4.0-rc2
 
   # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
