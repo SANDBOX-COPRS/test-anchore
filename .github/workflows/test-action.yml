@@ -18,6 +18,10 @@ jobs:
           ARTIFACTORY_PROJECT: rs-docker-private
           ARTIFACTORY_IMAGE: ew-l0c
           ARTIFACTORY_TAG: 1.5.0-rc1
+        - REGISTRY_BASE: artifactory.coprs.esa-copernicus.eu
+          ARTIFACTORY_PROJECT: rs-docker-private
+          ARTIFACTORY_IMAGE: ew-l0u
+          ARTIFACTORY_TAG: 1.5.0-rc1
     steps:
       #- uses: actions/checkout@v2
       
