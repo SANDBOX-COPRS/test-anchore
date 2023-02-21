@@ -4,7 +4,7 @@ env:
   REGISTRY_BASE: artifactory.coprs.esa-copernicus.eu
   ARTIFACTORY_PROJECT: rs-docker-private
   ARTIFACTORY_IMAGE: ew-l0c
-  ARTIFACTORY_TAG: 1.4.0-rc2
+  ARTIFACTORY_TAG: 1.5.0-rc1
 
 # Controls when the workflow will run
 on:
