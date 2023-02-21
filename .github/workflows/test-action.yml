@@ -1,11 +1,5 @@
 name: Test-GitHub-Action
 
-env:
-  REGISTRY_BASE: artifactory.coprs.esa-copernicus.eu
-  ARTIFACTORY_PROJECT: rs-docker-private
-  ARTIFACTORY_IMAGE: ew-l0c
-  ARTIFACTORY_TAG: 1.5.0-rc1
-
 # Controls when the workflow will run
 on:
   push:
@@ -17,23 +11,30 @@ jobs:
     #  image: ubuntu:latest
     #  options: -v /__w/test-security-scan/test-security-scan/csv.tpl:/contrib/csv.tpl:ro
     name: Test GitHub Action
+    strategy:
+      matrix:
+        include:
+        - REGISTRY_BASE: artifactory.coprs.esa-copernicus.eu
+          ARTIFACTORY_PROJECT: rs-docker-private
+          ARTIFACTORY_IMAGE: ew-l0c
+          ARTIFACTORY_TAG: 1.5.0-rc1
     steps:
       #- uses: actions/checkout@v2
       
       - name: Login to Artifactory
         uses: docker/login-action@v2
         with:
-          registry: ${{ env.REGISTRY_BASE }}
+          registry: ${{ matrix.REGISTRY_BASE }}
           username: ${{ secrets.ARTIFACTORY_USERNAME }}
           password: ${{ secrets.ARTIFACTORY_PASSWORD }}
 
       - name: Pull image
         run: |
-          docker pull ${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}
+          docker pull ${{ matrix.REGISTRY_BASE }}/${{ matrix.ARTIFACTORY_PROJECT }}/${{ matrix.ARTIFACTORY_IMAGE }}:${{ matrix.ARTIFACTORY_TAG }}
 
       - id: foo
         uses: sandbox-coprs/test-security-scan@master
         with:
-          image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ env.ARTIFACTORY_IMAGE }}:${{ env.ARTIFACTORY_TAG }}'
+          image-ref: '${{ matrix.REGISTRY_BASE }}/${{ matrix.ARTIFACTORY_PROJECT }}/${{ matrix.ARTIFACTORY_IMAGE }}:${{ matrix.ARTIFACTORY_TAG }}'
           upload-sarif: true
           timeout: 60m
