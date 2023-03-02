@@ -61,10 +61,16 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
-      - name: Download json report from build job
-        uses: actions/download-artifact@v2
+      - name: Run Trivy vulnerability scanner JSON
+        uses: aquasecurity/trivy-action@master
+        continue-on-error: true
         with:
-          name: vulnerabilities
+          image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ matrix.ARTIFACTORY_IMAGE }}:${{ matrix.ARTIFACTORY_TAG }}'
+          format: 'json'
+          output: 'vulnerabilities.json'
+          exit-code: '0'
+          ignore-unfixed: false
+          vuln-type: 'os,library'
 
       - name: Generate CSV
         run: |
