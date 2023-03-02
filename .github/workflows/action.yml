@@ -1,4 +1,4 @@
-name: Test-Action
+name: Trivy-Security-Scan
 
 # Controls when the workflow will run
 env:
@@ -6,16 +6,11 @@ env:
   ARTIFACTORY_PROJECT: rs-docker-private
           
 on:
-  push:
   workflow_dispatch:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    name: Test Action
-    strategy:
-      matrix:
-        ARTIFACTORY_IMAGE: [ew-l0c, ew-l0u]
-        ARTIFACTORY_TAG: [1.5.0-rc1]
+    name: Trivy-Security-Scan
     steps:
       #- uses: actions/checkout@v2
       
@@ -71,6 +66,7 @@ jobs:
           exit-code: '0'
           ignore-unfixed: false
           vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
 
       - name: Generate CSV
         run: |
@@ -90,4 +86,3 @@ jobs:
             vulnerabilities.pdf
             vulnerabilities.csv
             vulnerabilities.json
-            trivy-results.sarif
