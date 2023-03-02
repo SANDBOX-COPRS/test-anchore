@@ -21,7 +21,7 @@ jobs:
         ARTIFACTORY_TAG: [1.5.0-rc1]
     steps:
       - id: foo
-        uses: COPRS/reference-system-software/.github/workflows/main.yml@trivy-security-scan-v1
+        uses: COPRS/reference-system-software/.github/workflows/trivy-security-scan.yml@trivy-security-scan-v1
         with:
           image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ matrix.ARTIFACTORY_IMAGE }}:${{ matrix.ARTIFACTORY_TAG }}'
           upload-sarif: true
