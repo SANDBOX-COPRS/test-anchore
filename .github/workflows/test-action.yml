@@ -16,6 +16,6 @@ jobs:
         ARTIFACTORY_IMAGE: [ew-l0c, ew-l0u]
         ARTIFACTORY_TAG: [1.5.0-rc1]
     uses: COPRS/reference-system-software/.github/workflows/trivy-security-scan.yml@trivy-security-scan-v1
-    with: 
+    secrets: 
       ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
       ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
