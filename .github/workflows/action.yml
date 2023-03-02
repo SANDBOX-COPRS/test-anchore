@@ -59,16 +59,16 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
-          sarif_file: "trivy-results.sarif"
+          sarif_file: 'trivy-results.sarif'
 
       - name: Download json report from build job
         uses: actions/download-artifact@v2
         with:
-          name: vulnerabilities-${{ matrix.ARTIFACTORY_IMAGE }}:${{ matrix.ARTIFACTORY_TAG }}
+          name: vulnerabilities
 
       - name: Generate CSV
         run: |
-          cat vulnerabilities-${{ matrix.ARTIFACTORY_IMAGE }}:${{ matrix.ARTIFACTORY_TAG }}/vulnerabilities.json | jq --raw-output '[ "SEVERITY", "ID", "PACKAGE", "VERSION", "LINK" ], ( .Results[].Vulnerabilities[] | [.Severity, .VulnerabilityID, .PkgName, .InstalledVersion, .PrimaryURL]) | @csv' > vulnerabilities.csv
+          cat vulnerabilities.json | jq --raw-output '[ "SEVERITY", "ID", "PACKAGE", "VERSION", "LINK" ], ( .Results[].Vulnerabilities[] | [.Severity, .VulnerabilityID, .PkgName, .InstalledVersion, .PrimaryURL]) | @csv' > vulnerabilities.csv
 
       - name: Convert HTML to PDF
         uses: docker://ghcr.io/coprs/reference-system:dependencies_wkhtmltopdf
@@ -78,7 +78,7 @@ jobs:
       - name: Upload Anchore scan reports
         uses: actions/upload-artifact@master
         with:
-          name: vulnerabilities-${{ matrix.ARTIFACTORY_IMAGE }}:${{ matrix.ARTIFACTORY_TAG }}
+          name: vulnerabilities
           path: |
             vulnerabilities.html
             vulnerabilities.pdf
