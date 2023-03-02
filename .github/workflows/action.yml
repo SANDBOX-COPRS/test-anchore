@@ -84,8 +84,10 @@ jobs:
       - name: Upload Anchore scan reports
         uses: actions/upload-artifact@master
         with:
-          name: vulnerabilities
+          name: vulnerabilities-${{ matrix.ARTIFACTORY_IMAGE }}:${{ matrix.ARTIFACTORY_TAG }}
           path: |
             vulnerabilities.html
             vulnerabilities.pdf
             vulnerabilities.csv
+            vulnerabilities.json
+            trivy-results.sarif
