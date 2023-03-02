@@ -4,8 +4,7 @@ name: Test-GitHub-Action
 env:
   REGISTRY_BASE: artifactory.coprs.esa-copernicus.eu
   ARTIFACTORY_PROJECT: rs-docker-private
-  ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-  ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
 on:
   push:
   workflow_dispatch:
@@ -17,3 +16,4 @@ jobs:
         ARTIFACTORY_IMAGE: [ew-l0c, ew-l0u]
         ARTIFACTORY_TAG: [1.5.0-rc1]
     uses: COPRS/reference-system-software/.github/workflows/trivy-security-scan.yml@trivy-security-scan-v1
+    secrets: inherit
