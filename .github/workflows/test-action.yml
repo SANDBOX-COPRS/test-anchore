@@ -10,14 +10,10 @@ on:
   workflow_dispatch:
 jobs:
   scan:
-    runs-on: ubuntu-latest
     name: Test GitHub Action
     strategy:
       matrix:
         ARTIFACTORY_IMAGE: [ew-l0c, ew-l0u]
         ARTIFACTORY_TAG: [1.5.0-rc1]
     uses: COPRS/reference-system-software/.github/workflows/trivy-security-scan.yml@trivy-security-scan-v1
-    with:
-      image-ref: '${{ env.REGISTRY_BASE }}/${{ env.ARTIFACTORY_PROJECT }}/${{ matrix.ARTIFACTORY_IMAGE }}:${{ matrix.ARTIFACTORY_TAG }}'
-      upload-sarif: true
-      timeout: 60m
+    secrets: inherit
