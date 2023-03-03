@@ -10,15 +10,15 @@ on:
   workflow_dispatch:
 jobs:
   scan:
+    name: Test GitHub Action
     strategy:
       matrix:
         ARTIFACTORY_IMAGE: [ew-l0c, ew-l0u]
         ARTIFACTORY_TAG: [1.5.0-rc1]
-    steps:     
-    - uses: COPRS/reference-system-software/.github/workflows/trivy-security-scan.yml@trivy-security-scan-v1
-      with:
-        ARTIFACTORY_IMAGE: ${{ matrix.ARTIFACTORY_IMAGE }}
-        ARTIFACTORY_TAG: ${{ matrix.ARTIFACTORY_TAG }}
-      secrets: 
-        ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-        ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+    uses: COPRS/reference-system-software/.github/workflows/trivy-security-scan.yml@trivy-security-scan-v1
+    with:
+      ARTIFACTORY_IMAGE: ${{ matrix.ARTIFACTORY_IMAGE }}
+      ARTIFACTORY_TAG: ${{ matrix.ARTIFACTORY_TAG }}
+    secrets: 
+      ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+      ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
