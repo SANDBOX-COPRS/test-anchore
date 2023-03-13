@@ -13,14 +13,11 @@ jobs:
           docker pull tutum/hello-world:latest
 
       - name: Scan
-        strategy:
-          matrix:
-            IMAGE: [hello-world]
-            IMAGE_TAG: [latest]
+        
         uses: COPRS/reference-system-software@trivy-security-scan-v1
         with:
-          IMAGE: ${{ matrix.IMAGE }}
-          IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
+          IMAGE: 'hello-world'
+          IMAGE_TAG: 'latest'
           EXIT_CODE: '1'
           SEVERITY: 'CRITICAL,HIGH'
           PROJECT: 'tutum'
