@@ -19,6 +19,8 @@ jobs:
     with:
       ARTIFACTORY_IMAGE: ${{ matrix.ARTIFACTORY_IMAGE }}
       ARTIFACTORY_TAG: ${{ matrix.ARTIFACTORY_TAG }}
+      EXIT_CODE: '1'
+      SEVERITY: 'CRITICAL,HIGH'
     secrets: 
       ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
       ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
