@@ -16,8 +16,6 @@ jobs:
         
         uses: COPRS/reference-system-software@trivy-security-scan-v1
         with:
-          IMAGE: 'hello-world'
-          IMAGE_TAG: 'latest'
+          IMAGE_REF: 'tutum/hello-world:latest'
           EXIT_CODE: '1'
           SEVERITY: 'CRITICAL,HIGH'
-          PROJECT: 'tutum'
